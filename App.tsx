@@ -1,21 +1,25 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 import NoteTaker from "./components/NoteTaker";
+import WelcomeHeading from "./components/WelcomeHeading";
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Welcome to the note taking app!</Text>
-      <NoteTaker />
-    </View>
+    <NavigationContainer>
+      <Drawer.Navigator>
+        <Drawer.Screen
+          name="Home"
+          component={WelcomeHeading}
+          options={{ title: "Welcome" }}
+        />
+        <Drawer.Screen
+          name="NoteTaker"
+          component={NoteTaker}
+          options={{ title: "Note taker" }}
+        />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

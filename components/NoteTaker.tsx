@@ -1,8 +1,9 @@
 ﻿import React, { useState } from "react";
-import { Text, TextInput, View } from "react-native";
+import { Button, Text, TextInput, View } from "react-native";
 
 const NoteTaker = () => {
-  const [text, setText] = useState("");
+  const [inputText, setInputText] = useState("");
+  const [displayText, setDisplayText] = useState("");
   const placeholder = "Write your note here!";
 
   return (
@@ -10,10 +11,14 @@ const NoteTaker = () => {
       <TextInput
         style={styles.input}
         placeholder={placeholder}
-        onChangeText={(newText) => setText(newText)}
-        defaultValue={text}
+        onChangeText={(newText) => setInputText(newText)}
+        defaultValue={inputText}
       />
-      <Text style={styles.textOutput}>{text}</Text>
+      <Button onPress={() => {
+        setDisplayText(inputText);
+      }}
+              title="Submit" />
+      <Text style={styles.textOutput}>{displayText}</Text>
     </View>
   );
 };

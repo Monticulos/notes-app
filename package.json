@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "format": "prettier . --write",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
@@ -20,6 +21,7 @@
     "@types/jest": "^29.5.12",
     "@types/react": "^18.3.1",
     "@types/react-test-renderer": "^18.3.0",
+    "prettier": "3.2.5",
     "typescript": "^5.4.5"
   },
   "private": true

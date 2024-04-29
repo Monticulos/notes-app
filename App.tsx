@@ -1,50 +1,44 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { useEffect, useState } from "react";
-import NewNote from "./components/NewNote";
-import DisplayNote from "./components/DisplayNote";
-import { Text } from "react-native";
+import React, { useContext, useEffect } from "react";
+import {
+  NoteContext,
+  NoteContextProvider,
+} from "./context/NoteContextProvider";
+import { Note } from "./components/Note";
 
 const Drawer = createDrawerNavigator();
 
-export interface Note {
-  id: string | number;
-  name: string;
-  content: string;
-}
-
 export default function App() {
-  const [notes, setNotes] = useState<Note[]>([]);
+  const { notes, setNotes } = useContext(NoteContext);
 
   useEffect(() => {
     const fetchNotes = async () => {
       const fetchedNotes = [
-        { id: 1, name: "Note 1", content: "Content of Note 1" },
-        { id: 2, name: "Note 2", content: "Content of Note 2" },
+        { id: 1, title: "Note 1", content: "Content of Note 1" },
+        { id: 2, title: "Note 2", content: "Content of Note 2" },
       ];
       setNotes(fetchedNotes);
     };
 
     fetchNotes();
   }, []);
+
   return (
-    <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen
-          name="Create new note"
-          component={NewNote}
-          initialParams={{ notes: notes }}
-        />
-        <Drawer.Screen name="DisplayNote" component={DisplayNote} />
-        {notes.map((note) => (
-          <Drawer.Screen
-            key={note.id}
-            name={"Note " + note.id}
-            component={DisplayNote}
-            initialParams={{ note: note }}
-          />
-        ))}
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <NoteContextProvider>
+      <NavigationContainer>
+        <Drawer.Navigator>
+          <Drawer.Screen name="Create new note" component={Note} />
+          {notes.map((note) => (
+            <Drawer.Screen
+              key={note.id}
+              name={note.title}
+              component={Note}
+              initialParams={{ note: note }}
+            />
+          ))}
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </NoteContextProvider>
   );
 }
